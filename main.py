@@ -1,6 +1,6 @@
 #maine
 from graphics import *
-import terrain
+import terrain, cell
 
 def main(win,t_height,t_type,t_biome,land,w,h):
     tmod = 0
@@ -10,26 +10,22 @@ def main(win,t_height,t_type,t_biome,land,w,h):
     while True:
         keey = win.getKey()
         if keey == 'h':
-            cont = 0
-            tmod += 1
-            for i in range(h):
-                for j in range(w):
-                    t_height[i][j],t_type[i][j],t_biome[i][j] = terrain.changeter(t_height[i][j],t_type[i][j],tmod,0,land,cont,i,w,h)
-                    cont += 1
+            tmod += 6
         elif keey == 'c':
-            cont = 0
-            tmod -=1
-            for i in range(h):
-                for j in range(w):
-                    t_height[i][j],t_type[i][j],t_biome[i][j] = terrain.changeter(t_height[i][j],t_type[i][j],tmod,0,land,cont,i,w,h)
-                    cont += 1
+            tmod -= 6
         elif keey == 'q':
             win.quit()
             sys.exit()
+        elif keey == 'p':
+            cell.cell(win,w,h)
         if keey == 'h' or keey == 'c':
+            cont = 0
+            for i in range(h):
+                for j in range(w):
+                    t_height[i][j],t_type[i][j],t_biome[i][j] = terrain.changeter(t_height[i][j],t_type[i][j],tmod,0,land,cont,i,w,h)
+                    cont += 1
             yay = terrain.getTiles(t_biome,h)
             difyay = ((yay[0]/10+yay[2]/20+yay[4]/30+yay[6]/10+yay[11]/3+yay[16])-iceyyay)/2000
-            print(difyay)
             cont = 0
             for i in range(h):
                 for j in range(w):
@@ -37,11 +33,10 @@ def main(win,t_height,t_type,t_biome,land,w,h):
                     cont += 1
             win.update()
             yay = terrain.getTiles(t_biome,h)
-            print(yay)
 def start():
     w=192
     h=108
-    win = GraphWin('game4',w*10,h*10,fullscreen=False,autoflush=False)
+    win = GraphWin('game4',w*10,h*10,fullscreen=True,autoflush=False)
     win.setCoords(0,0,w,h)
     loading = Text(Point(w/2,h/2),'Generating Map...');loading.setSize(36);loading.draw(win)
     win.update()

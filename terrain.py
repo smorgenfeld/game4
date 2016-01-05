@@ -126,7 +126,7 @@ def changeter(t,tt,tempmod,heightmod,land,landcont,i,w,h):
                 ttt = 'grass_h'
             else:
                 ttt = 'desert_h'
-        elif t > .8 - heightmod/3:
+        elif t > .8 - heightmod/2:
             tt = 'plane'
             if temp < -40:
                 ttt = 'ice_p'
